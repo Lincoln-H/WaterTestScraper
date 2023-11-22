@@ -1,0 +1,163 @@
+import openpyxl
+import os,sys
+import pandas as pd
+import numpy as np
+import warnings
+
+
+def main():      
+    warnings.simplefilter(action='ignore', category=UserWarning)
+    for f in os.listdir('./files'):
+        try:
+                print(f)                
+                main_loop(f)
+        except Exception as exception:
+                print(f'Error occurred: {exception}')
+                exc_type, exc_obj, exc_tb = sys.exc_info()
+                fname = os.path.split(exc_tb.tb_frame.f_code.co_filename)[1]
+                print(f'file | {exc_type} || line:{ fname, exc_tb.tb_lineno}')
+                next
+                     
+def main_loop(x): 
+        df = pd.read_excel('./files/'+x,sheet_name = 0)
+        # read_standard_info(df)
+        # df = pd.read_excel('./files/'+x,sheet_name = 1)
+        # read_standard_info(df)
+        # df = pd.read_excel('./files/'+x,sheet_name = 2)
+        # read_standard_info(df)
+        # df = pd.read_excel('./files/'+x,sheet_name = 3)
+        # read_standard_info(df)
+        # df = pd.read_excel('./files/'+x,sheet_name = 4)
+        # read_standard_info(df)
+        # df = pd.read_excel('./files/'+x,sheet_name = 5)
+        # read_standard_info(df)
+        if(not pd.isnull(df.iloc[6,3])):
+            print('R-CHE')
+            rCHE(df)
+            return
+           
+        df = pd.read_excel('./files/'+x,sheet_name = 1)
+        if(not pd.isnull(df.iloc[6,3])):
+            print('R-SHO')
+            rSHO(df)
+            return
+        
+        df = pd.read_excel('./files/'+x,sheet_name = 2)
+        if(not pd.isnull(df.iloc[7,4])):
+            print('SRT')
+            return
+        
+        df = pd.read_excel('./files/'+x,sheet_name = 3)
+        if(not pd.isnull(df.iloc[7,4])):
+            print('R-COM')
+            return
+
+        df = pd.read_excel('./files/'+x,sheet_name = 5)
+        if(not pd.isnull(df.iloc[6,3])):
+            print('R-ALL')
+            rALL(df)
+            return
+              
+        df = pd.read_excel('./files/'+x,sheet_name = 4)
+        if(not pd.isnull(df.iloc[6,3])):
+            print('R-ECO')
+            rECO(df)
+            return
+
+
+
+
+def rALL(df):
+    values = np.empty(24,dtype= 'U32')
+    values[0] = str(df.iloc[6,3])#ph
+    values[1] = str(df.iloc[7,3])#Alkalinity
+    values[2] = str(df.iloc[8,3])#Total hardness
+    values[3] = str(df.iloc[9,3])#Calcium Hardness
+    values[4] = str(df.iloc[10,3])#Magnesium Hardness
+    values[5] = str(df.iloc[11,3])#Free Carbin Dioxide
+    values[6] = str(df.iloc[12,3])#LSI
+    values[7] = str(df.iloc[13,3])#Silcia
+    values[8] = str(df.iloc[14,3])#Nitrate
+    values[9] = str(df.iloc[15,3])#Total Iron
+    values[10] = str(df.iloc[16,3])#Manganese
+    values[11] = str(df.iloc[17,3])#Aluminium
+    values[12] = str(df.iloc[18,3])#Copper
+    values[13] = str(df.iloc[19,3])#TDS
+    values[14] = str(df.iloc[20,3])#Chloride
+    values[15] = str(df.iloc[21,3])#Sodium
+    values[16] = str(df.iloc[22,3])#Conductivity
+    values[17] = str(df.iloc[24,3])#Turbidity
+    values[18] = str(df.iloc[25,3])#Colour
+    values[19] = str(df.iloc[26,3])#UV254
+    values[20] = str(df.iloc[30,3])#Total Coliforms (p/a)
+    values[21] = str(df.iloc[31,3])#E.Coli (p/a)
+    values[22] = str(df.iloc[32,3])#Total Coliforms(MPN)
+    values[23] = str(df.iloc[33,3])#E.Coli(MPN)
+    write_to_file(values)
+    
+def rCHE(df):
+    values = np.empty(24,dtype= 'U32')
+    values[0] = str(df.iloc[6,3])#ph
+    values[1] = str(df.iloc[7,3])#Alkalinity
+    values[2] = str(df.iloc[8,3])#Total hardness
+    values[3] = str(df.iloc[9,3])#Calcium Hardness
+    values[4] = str(df.iloc[10,3])#Magnesium Hardness
+    values[5] = str(df.iloc[11,3])#Free Carbin Dioxide
+    values[6] = str(df.iloc[12,3])#LSI
+    values[7] = str(df.iloc[13,3])#Silcia
+    values[8] = str(df.iloc[14,3])#Nitrate
+    values[9] = str(df.iloc[15,3])#Total Iron
+    values[10] = str(df.iloc[16,3])#Manganese
+    values[11] = str(df.iloc[17,3])#Aluminium
+    values[12] = str(df.iloc[18,3])#Copper
+    values[13] = str(df.iloc[19,3])#TDS
+    values[14] = str(df.iloc[20,3])#Chloride
+    values[15] = str(df.iloc[21,3])#Sodium
+    values[16] = str(df.iloc[22,3])#Conductivity
+    values[17] = str(df.iloc[24,3])#Turbidity
+    values[18] = str(df.iloc[25,3])#Colour
+    values[19] = str(df.iloc[26,3])#UV254
+    write_to_file(values)
+
+def rSHO(df):
+        values = np.empty(24,dtype= 'U32')
+        values[0] = str(df.iloc[6,3])#ph
+        values[1] = str(df.iloc[6,3])#Alkalinity
+        values[2] = str(df.iloc[6,3])#total hardness
+        values[5] = str(df.iloc[6,3])#free carbon dioxide
+        values[6] = str(df.iloc[6,3])#LSI
+        values[7] = str(df.iloc[6,3])#Silica
+        values[9] = str(df.iloc[6,3])#total Iron
+        values[10] = str(df.iloc[6,3])#total Manganese
+        values[13] = str(df.iloc[6,3])#TDS
+        values[17] = str(df.iloc[6,3])#Turbidity
+        values[19] = str(df.iloc[6,3])#UV254 Transmission
+        write_to_file(values)
+
+def rECO(df):
+        values = np.empty(24,dtype='U32')
+        values[20] = str(df.iloc[6,3])#Total Coliforms (p/a)
+        values[21] = str(df.iloc[7,3])#E.Coli(p/a)
+        write_to_file(values)
+     
+def write_to_file(values):
+      with (open('output.txt','a')) as file:
+            file.write(','.join(values))
+            file.write('\n')
+
+def read_standard_info(df):
+       #pull;
+       with (open('output.txt','a')) as file:
+            file.write(df.iloc[1,1]+', ')
+            file.write('\n')
+    #    print(df.iloc[1,1])#dealer name
+    #    print(df.iloc[2,1])#Refernce Name
+    #    print(df.iloc[3,2])#sample type
+    #    print(df.iloc[1,9])#sample #
+    #    print(df.iloc[2,9])#date
+       #comments?
+       print('=========================================\n')
+
+main()
+
+
