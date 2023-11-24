@@ -9,6 +9,7 @@ def main():
     warnings.simplefilter(action='ignore', category=UserWarning)
     for f in os.listdir('./files'):
         try:
+                #f = "test.xlsx"
                 print(f)                
                 main_loop(f)
         except Exception as exception:
@@ -31,38 +32,48 @@ def main_loop(x):
         # read_standard_info(df)
         # df = pd.read_excel('./files/'+x,sheet_name = 5)
         # read_standard_info(df)
-        if(not pd.isnull(df.iloc[6,3])):
+        if(df.iloc[1,1] != 'DEALER NAME'):
             print('R-CHE')
+            write_dealer(df.iloc[1,1])
             rCHE(df)
             return
-           
+        
+        df = pd.read_excel('./files/'+x,sheet_name = 5)
+        if(df.iloc[1,1] != 'DEALER NAME'):
+            print('R-ALL')
+            rALL(df)
+            write_dealer(df.iloc[1,1])
+            return
+
         df = pd.read_excel('./files/'+x,sheet_name = 1)
-        if(not pd.isnull(df.iloc[6,3])):
+        if(df.iloc[1,1] != 'DEALER NAME'):
             print('R-SHO')
+            write_dealer(df.iloc[1,1])
             rSHO(df)
             return
         
         df = pd.read_excel('./files/'+x,sheet_name = 2)
-        if(not pd.isnull(df.iloc[7,4])):
+        if(df.iloc[1,1] != 'DEALER NAME'):
             print('SRT')
+            write_dealer(df.iloc[1,1])
             return
         
         df = pd.read_excel('./files/'+x,sheet_name = 3)
-        if(not pd.isnull(df.iloc[7,4])):
+        if(df.iloc[1,1] != 'DEALER NAME'):
             print('R-COM')
+            write_dealer(df.iloc[1,1])
             return
-
-        df = pd.read_excel('./files/'+x,sheet_name = 5)
-        if(not pd.isnull(df.iloc[6,3])):
-            print('R-ALL')
-            rALL(df)
-            return
-              
         df = pd.read_excel('./files/'+x,sheet_name = 4)
-        if(not pd.isnull(df.iloc[6,3])):
+        if(df.iloc[1,1] != 'DEALER NAME'):
             print('R-ECO')
             rECO(df)
+            write_dealer(df.iloc[1,1])
             return
+        print("Uh Oh")
+
+        
+              
+
 
 
 
@@ -158,6 +169,11 @@ def read_standard_info(df):
        #comments?
        print('=========================================\n')
 
+def write_dealer(dealer_name):
+    with (open('dealers.txt','a')) as file:
+                file.write(dealer_name)
+                file.write('\n')
+     
 main()
 
 

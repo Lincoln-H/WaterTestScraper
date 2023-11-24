@@ -1,0 +1,10 @@
+with open('dealers.txt','r') as temp_file:
+    temp = [line.strip('\n') for line in temp_file]
+    temp = [line.removesuffix("LTD") for line in temp]
+    temp = [line.removesuffix("Ltd") for line in temp]
+    temp = [line.removesuffix("ltd") for line in temp]
+    temp = [line.strip() for line in temp]
+
+    
+with open('dealers.txt','w') as temp_file:
+    temp_file.write('\n'.join(temp))
